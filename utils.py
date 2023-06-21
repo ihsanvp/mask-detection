@@ -13,9 +13,11 @@ class FaceDetector:
         self.model = cv2.CascadeClassifier("data/models/face_detector/haarcascade_frontalface_default.xml")
 
     def detect(self, image):
-        return self.model.detectMultiScale(image, 1.1, 4)
+        return self.model.detectMultiScale(image, 1.1, 1)
 
 class MaskDetector:
+    SCORE_THRESHOLD = 0.5
+
     LABELS_PATH = "data/models/mask_detector/labels.txt"
     MODEL_PATH = "data/models/mask_detector/keras_model.h5"
 
@@ -27,6 +29,7 @@ class MaskDetector:
         predictions = self.model.predict(processed_data, verbose=0)
         prediction = np.squeeze(predictions)
         index = np.argmax(prediction)
+        score = prediction[index]
         
         is_match = False
 
@@ -35,7 +38,7 @@ class MaskDetector:
         else:
             is_match = False
 
-        return is_match
+        return is_match, score
         
 
     def preprocess(self, image):

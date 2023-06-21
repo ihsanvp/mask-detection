@@ -17,7 +17,8 @@ def main():
             if len(faces):
                 x, y, w, h = faces[0]
                 color = utils.Colors.RED
-                has_mask = mask_detection_model.detect(frame)
+                has_mask, score = mask_detection_model.detect(frame)
+                print("Detected:", has_mask, "Score:", score)
 
                 if has_mask:
                     color = utils.Colors.GREEN
