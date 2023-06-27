@@ -33,7 +33,7 @@ class MaskDetector:
         
         is_match = False
 
-        if index == 0:
+        if index == 1:
             is_match = True
         else:
             is_match = False
@@ -42,7 +42,7 @@ class MaskDetector:
         
 
     def preprocess(self, image):
-        processed = cv2.resize(image, (224, 224), interpolation=cv2.INTER_CUBIC)
+        processed = cv2.resize(image, (224, 224), interpolation=cv2.INTER_AREA)
         processed = np.asarray(processed, dtype=np.float32)
         processed = np.expand_dims(processed, axis=0)
         processed = (processed / 127.5) - 1
